@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru_RU">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Feedback on telegram</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div class="form-wrapper">
+    <form id="form-contact" method="POST" class="contact-form" autocomplete="off" enctype="multipart/form-data">
+      <p class="contact-form__title">Заполните все поля и прикрепите фото</p>
+      <div class="preloader"></div>
+      <p class="contact-form__message"></p>
+
+      <div class="contact-form__input-wrapper contact-form__input-wrapper_name">
+        <input name="name" type="text" class="contact-form__input contact-form__input_name"
+               placeholder="Введите ваше имя">
+      </div>
+
+      <div class="contact-form__input-wrapper contact-form__input-wrapper_phone">
+        <input name="phone" type="tel" class="contact-form__input contact-form__input_phone"
+               placeholder="Введите ваш телефон">
+      </div>
+      <div class="contact-form__input-wrapper contact-form__input-wrapper_theme">
+        <input name="theme" type="text" class="contact-form__input contact-form__input_theme"
+               placeholder="Введите ваше тему для письма">
+      </div>
+   
+      <div class="contact-form__input-wrapper">
+        <input type="file" name="files[]" id="contact-form__input_file"
+               class="contact-form__input contact-form__input_file" multiple>
+        <label for="contact-form__input_file" class="contact-form__file-button">
+          <span class="contact-form__file-text">Выберите файл</span>
+        </label>
+      </div>
+      <button type="submit" class="contact-form__button">Отправить</button>
+    </form>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/feedbackform/js/fdform.js"></script>
+  <script>
+       let inputs = document.querySelectorAll('.contact-form__input_file');
+    Array.prototype.forEach.call(inputs, function (input) {
+      let label = input.nextElementSibling,
+        labelVal = label.querySelector('.contact-form__file-text').innerText;
+
+      input.addEventListener('change', function (e) {
+        let countFiles = '';
+        if (this.files && this.files.length >= 1)
+          countFiles = this.files.length;
+
+        if (countFiles)
+          label.querySelector('.contact-form__file-text').innerText = 'Выбрано файлов: ' + countFiles;
+        else
+          label.querySelector('.contact-form__file-text').innerText = labelVal;
+      });
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+  <script>
+    $(function () {
+      $('input[type="tel"]').mask('+7(000)000-00-00');
+    });
+  </script>
+</body>
+</html>
